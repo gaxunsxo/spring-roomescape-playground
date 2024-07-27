@@ -1,5 +1,7 @@
 package roomescape.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +29,19 @@ public class ReservationController {
 
     // 예약 추가
     @PostMapping("/reservations")
-    public ResponseEntity<Void> create(@RequestBody Reservation reservation) {
+    @ResponseBody
+    public ResponseEntity<Reservation> create(@RequestBody Reservation reservation) {
         // TODO: 예약 정보를 받아 예약을 추가한다.
         Reservation newReservation = Reservation.toEntity(reservation, index.getAndIncrement());
         reservations.add(newReservation);
-        return ResponseEntity.created(URI.create("/reservations/" + newReservation.getId())).build();
+        return ResponseEntity.created(URI.create("/reservations/" + newReservation.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(newReservation);
     }
 
     // 예약 취소
     @DeleteMapping("/reservations/{id}")
+    @ResponseBody
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         // TODO: url 상의 id 정보를 받아 예약을 취소(삭제)한다.
         Reservation reservation = reservations.stream()
@@ -45,7 +51,7 @@ public class ReservationController {
 
         reservations.remove(reservation);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     // 예약 목록 조회 API
