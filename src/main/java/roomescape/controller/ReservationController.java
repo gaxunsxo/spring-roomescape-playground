@@ -4,8 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import roomescape.domain.Reservation;
+import roomescape.dto.Reservation;
+import roomescape.exception.NotFoundReservationException;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -32,6 +34,13 @@ public class ReservationController {
     @ResponseBody
     public ResponseEntity<Reservation> create(@RequestBody Reservation reservation) {
         // TODO: 예약 정보를 받아 예약을 추가한다.
+        // 필수 인자 검증
+        if (reservation.getName() == null || reservation.getName().isEmpty() ||
+                reservation.getDate() == null || reservation.getDate().isEmpty() ||
+                reservation.getTime() == null || reservation.getTime().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Reservation newReservation = Reservation.toEntity(reservation, index.getAndIncrement());
         reservations.add(newReservation);
         return ResponseEntity.created(URI.create("/reservations/" + newReservation.getId()))
@@ -47,7 +56,7 @@ public class ReservationController {
         Reservation reservation = reservations.stream()
                 .filter(it -> Objects.equals(it.getId(), id))
                 .findFirst()
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new NotFoundReservationException("Reservation not found for ID: " + id));
 
         reservations.remove(reservation);
 

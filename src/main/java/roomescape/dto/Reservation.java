@@ -1,4 +1,4 @@
-package roomescape.domain;
+package roomescape.dto;
 
 public class Reservation {
     private Long id;
@@ -46,6 +46,7 @@ public class Reservation {
         this.time = time;
     }
 
+    // 유효성 검사 추가
     public static Reservation toEntity(Reservation reservation, Long id) {
         return new Reservation(id, reservation.name, reservation.date, reservation.time);
     }
