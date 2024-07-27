@@ -5,21 +5,21 @@ public class Reservation {
     private String name;
     private String date;
 
+    private String time;
+
     // 생성자, getter, setter
-    public Reservation(Long id, String name, String date) {
+    public Reservation(Long id, String name, String date, String time) {
         this.id = id;
         this.name = name;
         this.date = date;
+        this.time = time;
     }
 
-    // ID
+    // Id
     public Long getId() {
         return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) { this.id = id; }
 
     // Name
     public String getName() {
@@ -37,5 +37,16 @@ public class Reservation {
 
     public void setDate() {
         this.date = date;
+    }
+
+    // Time
+    public String getTime() { return time; }
+
+    public void setTime() {
+        this.time = time;
+    }
+
+    public static Reservation toEntity(Reservation reservation, Long id) {
+        return new Reservation(id, reservation.name, reservation.date, reservation.time);
     }
 }
