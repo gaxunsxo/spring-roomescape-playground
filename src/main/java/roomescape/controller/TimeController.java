@@ -14,7 +14,6 @@ import java.util.List;
 public class TimeController {
     private final TimeService timeService;
 
-    @Autowired
     public TimeController(TimeService timeService) {
         this.timeService = timeService;
     }
