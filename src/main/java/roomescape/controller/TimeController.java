@@ -47,10 +47,9 @@ public class TimeController {
     @ResponseBody
     public ResponseEntity<?> deleteTime(@PathVariable Long id) {
         boolean isDeleted = timeService.deleteTime(id);
-        if (isDeleted) {
-            return ResponseEntity.noContent().build();
-        } else {
+        if (!isDeleted) {
             return ResponseEntity.badRequest().build();
         }
+        return ResponseEntity.noContent().build();
     }
 }
