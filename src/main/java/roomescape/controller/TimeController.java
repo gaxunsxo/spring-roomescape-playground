@@ -26,10 +26,6 @@ public class TimeController {
     @PostMapping("/times")
     @ResponseBody
     public ResponseEntity<Time> createTime(@RequestBody Time time) {
-        if(!timeService.isValidTime(time)) {
-            return ResponseEntity.badRequest().build();
-        }
-
         Time newTime = timeService.createTime(time);
 
         return ResponseEntity.created(URI.create("/times/" + newTime.getId()))
