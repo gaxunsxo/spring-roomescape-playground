@@ -3,6 +3,7 @@ package roomescape.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import roomescape.domain.Reservation;
+import roomescape.exception.NotFoundReservationException;
 import roomescape.repository.ReservationRepository;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Reservation reservation) {
+        if (!isValidReservation(reservation)) {
+            throw new NotFoundReservationException("Invalid reservation details or time_id not found");
+        }
         return reservationRepository.save(reservation);
     }
 
