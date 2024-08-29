@@ -42,9 +42,8 @@ public class TimeRepository {
                 ));
     }
 
-    public boolean deleteById(Long id) {
+    public int deleteById(Long id) {
         String sql = "DELETE FROM time WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, id);
-        return rowsAffected > 0;
+        return jdbcTemplate.update(sql, id);
     }
 }

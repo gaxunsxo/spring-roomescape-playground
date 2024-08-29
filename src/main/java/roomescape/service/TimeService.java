@@ -28,7 +28,8 @@ public class TimeService {
     }
 
     public boolean deleteTime(Long id) {
-        return timeRepository.deleteById(id);
+        int rowsAffected = timeRepository.deleteById(id);
+        return rowsAffected > 0;
     }
 
     public boolean isValidTime(Time time) {
