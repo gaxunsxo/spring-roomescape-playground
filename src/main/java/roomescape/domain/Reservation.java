@@ -46,7 +46,7 @@ public class Reservation {
 
     public Time getTime() { return time; }
 
-    public void setTime() {
+    public void setTime(Time time) {
         this.time = time;
     }
 

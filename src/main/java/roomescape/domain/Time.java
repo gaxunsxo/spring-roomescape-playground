@@ -4,6 +4,11 @@ public class Time {
     private String time;
     private Long id;
 
+    // 새로운 생성자 추가
+    public Time(Long id) {
+        this.id = id;
+    }
+
     public Time(Long generatedId, String time) {
         this.id = generatedId;
         this.time = time;
